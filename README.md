@@ -1,66 +1,157 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Shopping App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a **Laravel** and **Vue.js** application for managing shopping lists. It allows users to create shopping lists, add items to the lists, update or delete items, and track their shopping.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
+- Manage shopping lists.
+- Add, update, and remove items.
+- Track total cost and remaining budget.
+- Mark items as "picked up."
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Technologies Used
 
-## Learning Laravel
+- **Backend**: Laravel (PHP Framework)
+- **Frontend**: Vue.js (JavaScript Framework)
+- **Database**: SQLite (for testing) or MySQL
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Setup Instructions
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Installation Steps
 
-## Laravel Sponsors
+1. **Clone the Repository:**
+   ```bash
+   git clone git@github.com:CodeTortuga/shopping-app.git
+   cd shopping-app
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+2. **Install Dependencies:**
+   ```bash
+   composer install
+   npm install
+   ```
 
-### Premium Partners
+3. **Set Up Environment:**
+   Copy the example environment file and update it as needed:
+   ```bash
+   cp .env.example .env
+   ```
+    - Update database credentials (e.g., `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`) in the `.env` file.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+4. **Generate Application Key:**
+   ```bash
+   php artisan key:generate
+   ```
 
-## Contributing
+5. **Run Database Migrations:**
+   ```bash
+   php artisan migrate
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. **Run the Development Server:**
+   ```bash
+   php artisan serve
+   npm run dev
+   ```
+  
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## API Endpoints
 
-## Security Vulnerabilities
+### Shopping List Endpoints
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **Create a Shopping List**
+  ```http
+  POST /api/list
+  ```
+  **Payload:**
+  ```json
+  {
+    "name": "Weekly Groceries",
+    "budget": 50.00
+  }
+  ```
 
-## License
+- **Get All Shopping Lists**
+  ```http
+  GET /api/list/all
+  ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Get Shopping List with Items**
+  ```http
+  GET /api/list/{listId}
+  ```
+
+### Shopping List Items Endpoints
+
+- **Get All Items**
+  ```http
+  GET /api/items
+  ```
+
+- **Create an Item**
+  ```http
+  POST /api/items
+  ```
+  **Payload:**
+  ```json
+  {
+    "name": "Eggs",
+    "price": 2.50,
+    "quantity": 12,
+    "picked_up": false,
+    "shopping_list_id": 1
+  }
+  ```
+
+- **Update an Item**
+  ```http
+  PUT /api/items/{id}
+  ```
+  **Payload:**
+  ```json
+  {
+    "name": "Ostrich Eggs",
+    "price": 3.00,
+    "quantity": 10
+  }
+  ```
+
+- **Delete an Item**
+  ```http
+  DELETE /api/items/{id}
+  ```
+
+- **Toggle Picked Up Status**
+  ```http
+  PATCH /api/items/{id}/toggle-picked-up
+  ```
+
+---
+
+## Testing
+
+### Setting Up Tests
+
+1. **Run Migrations for Testing:**
+   ```bash
+   php artisan migrate --env=testing
+   ```
+
+2. **Run Unit Tests:**
+   ```bash
+   php artisan test
+   ```
+
+---
+
+## Notes
+
+- This project includes attempts at implementing item reordering, but it is currently not functional. Did not have enough time.
+- Ensure proper database setup for testing (SQLite is configured for testing in `phpunit.xml`).
